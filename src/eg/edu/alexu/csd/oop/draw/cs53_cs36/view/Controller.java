@@ -40,12 +40,9 @@ public class Controller implements Initializable {
     @FXML
     private ToggleButton reSizeButton;
 	private GraphicsContext workingPicture;
-	private Double startX, startY, lastX, lastY, oldCurveX, oldCurveY;
-	private boolean triangleHelper = false;
+	private Double startX, startY, lastX, lastY;
 	private String typeToDo = "Line";
-	private int numberOfLines=-1;
 	private ToggleGroup toggleGroupForShapes;
-	private Point sPointTriangle;
 	private MyShape shapeBeingDragged = null;
 	MyPaint paintEngine;
 	@Override
@@ -81,13 +78,6 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
-		if(triangleHelper) {
-			this.oldCurveX = this.startX;
-			this.oldCurveY = this.startY;
-			sPointTriangle = new Point();
-			sPointTriangle.setLocation(startX, startY);
-			triangleHelper = false;
-		}
 	}
 	@FXML
 	private void onMouseDraggedListener(MouseEvent e) throws Exception {
@@ -115,13 +105,12 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
-		if(typeToDo.equals("Triangle"))
-			return;
 		this.lastX = e.getX();
 		this.lastY = e.getY();
 		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 		Class<?> classShape = Class.forName("eg.edu.alexu.csd.oop.draw.cs53_cs36.shapes."+typeToDo);
 		Constructor<?> ctor = classShape.getConstructors()[0];
+		System.out.println(ctor.getParameterCount());
 		Shape shape = (Shape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
 		shape.draw(workingCanvas);
 	}
@@ -135,10 +124,6 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
-		if(typeToDo.equals("Triangle")) {
-			drawTriangle();
-			return;
-		}
 		Class<?> classShape = Class.forName("eg.edu.alexu.csd.oop.draw.cs53_cs36.shapes."+typeToDo);
 		Constructor<?> ctor = classShape.getConstructors()[0];
 		Shape shape = (Shape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
@@ -146,31 +131,10 @@ public class Controller implements Initializable {
 		paintEngine.refresh(finalCanvas);
 		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 	}
-	private void drawTriangle() {
-       numberOfLines++;
-        if(numberOfLines==0) {
-        	lastX = oldCurveX;
-        	lastY = oldCurveY;
-        }
-        workingPicture.strokeLine(oldCurveX, oldCurveY, startX, startY);
-        if(numberOfLines==2) {
-        	workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
-        	Triangle t = new Triangle(sPointTriangle,new Point(oldCurveX.intValue(), oldCurveY.intValue()), new Point(startX.intValue(), startY.intValue()));
-    		paintEngine.addShape(t);
-    		paintEngine.refresh(finalCanvas);
-            numberOfLines=-1;
-            triangleHelper = true;
-        }
-        this.oldCurveX = startX;
-        this.oldCurveY = startY;
-	}
 	@FXML
 	private void clickButtonShapes(ActionEvent e) {
 		paintEngine.refresh(finalCanvas);
 		ToggleButton tb = (ToggleButton) e.getSource();
 		typeToDo = tb.getText();
 		System.out.println(typeToDo);
-		if(typeToDo.equals("Triangle"))
-			triangleHelper = true;
-	}
 }

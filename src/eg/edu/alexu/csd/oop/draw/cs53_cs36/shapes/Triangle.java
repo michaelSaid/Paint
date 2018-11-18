@@ -12,16 +12,12 @@ import javafx.scene.paint.Color;
 
 public class Triangle extends MyShape {
 
-	public Triangle(Point p1,Point p2,Point p3)
-	{
+	public Triangle(Point p1,Point p2) {
 		super();
-		this.getProperties().put("x1", p1.getX());
-		this.getProperties().put("x2", p2.getX());
-		this.getProperties().put("x3", p3.getX());
-		this.getProperties().put("y1", p1.getY());
-		this.getProperties().put("y2", p2.getY());
-		this.getProperties().put("y3", p3.getY());
-		this.setPosition(p1);
+		int width = Math.abs(p1.x - p2.x);
+		int x = p1.x < p2.x ? p1.x + width / 2 : p1.x - width / 2;
+		int x2 = p1.x < p2.x ? p2.x - width : p2.x + width;
+		TriangleSet(new Point(x, p1.y), new Point(x2, p2.y), p2);
 	}
 	public Triangle()
 	{
@@ -99,5 +95,15 @@ public class Triangle extends MyShape {
 		getProperties().put("y3", (double) ((getProperties().get("y3")+y)));
 		getProperties().put("x2", (double) ((getProperties().get("x2")+x)));
 		getProperties().put("y2", (double) ((getProperties().get("y2")+y)));
+	}
+	public void TriangleSet(Point p1,Point p2,Point p3)
+	{
+		this.getProperties().put("x1", p1.getX());
+		this.getProperties().put("x2", p2.getX());
+		this.getProperties().put("x3", p3.getX());
+		this.getProperties().put("y1", p1.getY());
+		this.getProperties().put("y2", p2.getY());
+		this.getProperties().put("y3", p3.getY());
+		this.setPosition(p1);
 	}
 }
