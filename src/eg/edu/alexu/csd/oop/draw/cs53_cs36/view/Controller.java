@@ -159,6 +159,7 @@ public class Controller implements Initializable {
 		paintEngine.addShape(shape);
 		paintEngine.refresh(finalCanvas);
 		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+		
 	}
 	@FXML
 	private void clickButtonShapes(ActionEvent e) {
@@ -177,6 +178,7 @@ public class Controller implements Initializable {
 		case"Redo":paintEngine.redo();break;
 		case"Copy":copy();break;
 		case"Paste":paste();break;
+		case"Delete":Delete();break;
 		default:
 			break;
 		}
@@ -199,9 +201,15 @@ public class Controller implements Initializable {
 		paintEngine.refresh(finalCanvas);		
 		return;
 	}
+	private void Delete() throws CloneNotSupportedException {
+		paintEngine.removeShape(oldShape);
+		paintEngine.refresh(finalCanvas); 
+		selectButton.setSelected(false);
+		typeToDo = "";	
+	}
 	private void copy() {
 		try {
-			selectedShape = (MyShape) shapeBeingDragged.clone();
+		selectedShape = (MyShape) shapeBeingDragged.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

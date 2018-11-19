@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
+<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
    <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="569.0" prefWidth="760.0">
          <items>
@@ -54,7 +54,7 @@
                         <Button fx:id="redoButton" mnemonicParsing="false" onAction="#clickButtons" text="Redo" />
                         <Button fx:id="copyButton" mnemonicParsing="false" onAction="#clickButtons" text="Copy" />
                         <Button fx:id="pasteButton" mnemonicParsing="false" onAction="#clickButtons" text="Paste" />
-                        <Button mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickButtons" text="Delete" />
                      </items>
                   </ToolBar>
                   <ToolBar layoutY="53.0" orientation="VERTICAL" prefHeight="476.0" prefWidth="135.0">
@@ -71,7 +71,7 @@
                      </items>
                   </ToolBar>
                   <Canvas fx:id="finalCanvas" height="469.0" layoutX="135.0" layoutY="60.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
-                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="60.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
+                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="53.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
                </children>
             </AnchorPane>
          </items>
