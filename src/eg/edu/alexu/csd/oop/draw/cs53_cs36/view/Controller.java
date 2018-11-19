@@ -16,6 +16,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 public class Controller implements Initializable {
@@ -129,7 +130,7 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
-		if(typeToDo.equals("Select"))
+		if(typeToDo.equals("Select")||typeToDo.isEmpty())
 			return;
 		this.lastX = e.getX();
 		this.lastY = e.getY();
@@ -152,7 +153,7 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
-		if(typeToDo.equals("Select"))
+		if(typeToDo.equals("Select")||typeToDo.isEmpty())
 			return;
 		Class<?> classShape = Class.forName("eg.edu.alexu.csd.oop.draw.cs53_cs36.shapes."+typeToDo);
 		Constructor<?> ctor = classShape.getConstructors()[0];
@@ -187,39 +188,45 @@ public class Controller implements Initializable {
 		return;
 	}
 	@FXML
-	private void ClickKeys(KeyEvent e) throws CloneNotSupportedException {
+	private void ClickKeys(KeyEvent e) {
 		
 	 if(e.isShortcutDown()) {
-		switch(((KeyEvent)e).getCode()) {
+		switch(e.getCode()) {
 		case C:copy();break;
 		case V:paste();break;
-		case DELETE :Delete();break;
 		case Z:paintEngine.undo();break;
 		case Y:paintEngine.redo();break;
 		default:
 			break;
 		}
+	}else {
+		if(e.getCode()==KeyCode.DELETE)
+			Delete();
 	}
 		paintEngine.refresh(finalCanvas);		
 		return;
 	}
-	private void Delete() throws CloneNotSupportedException {
+	private void Delete(){
+		if(selectedShape!=null) {
 		paintEngine.removeShape(selectedShape);
-		paintEngine.refresh(finalCanvas); 
+		}
 		selectButton.setSelected(false);
 		typeToDo = "";	
 	}
 	private void copy() {
+		if(shapeBeingDragged!=null) {
 		try {
 		selectedShape = (MyShape) shapeBeingDragged.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 		selectButton.setSelected(false);
 		typeToDo = "";
 	}
 	private void paste() {
+		if(selectedShape!=null) {
 		selectedShape.moveBy(20, 20);
 		try {
 			paintEngine.addShape((Shape) selectedShape.clone());
@@ -227,6 +234,7 @@ public class Controller implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 		selectButton.setSelected(false);
 		typeToDo = "";
 	}
