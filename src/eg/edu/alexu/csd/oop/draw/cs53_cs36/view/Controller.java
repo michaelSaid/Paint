@@ -91,6 +91,7 @@ public class Controller implements Initializable {
 			for(int i=paintEngine.getShapes().length-1;i>=0;i--) {
 				 oldShape = (MyShape) paintEngine.getShapes()[i];
 				if(oldShape.isCountainsPoint(startX.intValue(),startY.intValue())) {
+					selectedShape=oldShape;
 					oldShape.drawBonds(finalCanvas);
 					shapeBeingDragged = (MyShape) oldShape.clone();
 					System.out.println("Move is detected");
@@ -186,12 +187,13 @@ public class Controller implements Initializable {
 		return;
 	}
 	@FXML
-	private void ClickKeys(KeyEvent e) {
+	private void ClickKeys(KeyEvent e) throws CloneNotSupportedException {
 		
 	 if(e.isShortcutDown()) {
 		switch(((KeyEvent)e).getCode()) {
 		case C:copy();break;
 		case V:paste();break;
+		case D:Delete();break;
 		case Z:paintEngine.undo();break;
 		case Y:paintEngine.redo();break;
 		default:
@@ -202,7 +204,7 @@ public class Controller implements Initializable {
 		return;
 	}
 	private void Delete() throws CloneNotSupportedException {
-		paintEngine.removeShape(oldShape);
+		paintEngine.removeShape(selectedShape);
 		paintEngine.refresh(finalCanvas); 
 		selectButton.setSelected(false);
 		typeToDo = "";	
@@ -228,5 +230,6 @@ public class Controller implements Initializable {
 		selectButton.setSelected(false);
 		typeToDo = "";
 	}
+	
 
 }
