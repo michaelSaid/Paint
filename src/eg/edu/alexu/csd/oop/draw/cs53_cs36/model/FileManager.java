@@ -1,14 +1,16 @@
 package eg.edu.alexu.csd.oop.draw.cs53_cs36.model;
 
-import java.awt.Point;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,13 +35,6 @@ public class FileManager {
 			Shape[] shapes = paint.getShapes();
 			for(int i=0;i<shapes.length;i++){
 				bw.write("<shape id = "+"\""+shapes[i].getClass().getName()+"\">");
-				if(shapes[i].getPosition()!=null) {
-					bw.write("<x>"+((Point)shapes[i].getPosition()).x+"</x>");
-					bw.write("<y>"+((Point)shapes[i].getPosition()).y+"</y>");
-				}else {
-					bw.write("<x>"+-1+"</x>");
-					bw.write("<y>"+-1+"</y>");
-				}
 				bw.write("<map>");
 				Map<String , Double> map = shapes[i].getProperties();
 				if(map!=null) {
@@ -81,14 +76,6 @@ public class FileManager {
 							Class<?> classShape = Class.forName(element.getAttribute("id"));
 							Constructor<?> ctor = classShape.getConstructor();
 							Shape shape = (Shape) ctor.newInstance(new Object[] { });
-							Point position = new Point();
-			        		position.x=Integer.parseInt(element.getElementsByTagName("x").item(0).getTextContent());
-			        		position.y=Integer.parseInt(element.getElementsByTagName("y").item(0).getTextContent());
-			        		if(position.x==-1&&position.y==-1) {
-			        			shape.setPosition(null);
-			        		}else {
-			        			shape.setPosition(position);
-			        		}
 			        		Map <String, Double>properties = new HashMap<String, Double>();
 			        		NodeList map = element.getElementsByTagName("map").item(0).getChildNodes();
 			        		for(int j=0;j<map.getLength();j++) {
@@ -114,10 +101,112 @@ public class FileManager {
 		}
 		
 	}
-	public static void WriteJSON(String path , MyPaint paint) {
+	public static void WriteJSON(String path , MyPaint paint) throws Exception {
+		Shape[] shapes = paint.getShapes();
+		BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+		bw.write("{\n");
+		bw.write("\"shapes\": [\n");
+		for(int i = 0; i < shapes.length; i++){
+			writeProperties(shapes[i] ,bw);
+			if(i != shapes.length-1){
+				bw.write("},\n");
+			}
+			else{
+				bw.write("}\n");
+			}
+		}
+		bw.write("]\n");
+		bw.write("}");
+		bw.close();
 		
 	}
-	public static void loadJson(String path , MyPaint p) {
-		
+	private static void writeProperties(Shape shape ,BufferedWriter bw) throws IOException{
+		bw.write("{\n");
+		writeKeyValue("Kind",shape.getClass().getName(),bw);
+		bw.write(",\n");
+		Map<String, Double>properties = shape.getProperties();
+		if(properties != null){
+			bw.write(",\n");
+			bw.write("\"properties\": {\n");
+			Set<String> keys = properties.keySet();
+			int counter = 0;
+			for(String key : keys){
+				counter++;
+				writeKeyValue(key, "" + properties.get(key),bw);
+				if(counter != keys.size()){
+					bw.write(",\n");
+				}
+			}
+			bw.write("\n");
+			bw.write("}\n");
+		}
+}
+	private static void writeKeyValue(String key,String value ,BufferedWriter bw){
+		try {
+			bw.write("\"" + key + "\":" + "\"" + value + "\"");
+		} catch (IOException e) {
+			
+			throw new RuntimeException("error");
+		}
+	}
+	public static void loadJson(String path , MyPaint p) throws Exception {
+		int counter = 0;		
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		StringBuilder builder = new StringBuilder();
+		String currentLine = new String();
+		for(int i = 0; i < 2; i++){
+			builder.append(br.readLine());
+		}
+		if(!builder.toString().equals("nullnull")){
+			while(!((currentLine = br.readLine()).equals("]"))){
+				currentLine = br.readLine();
+				Class<?> classShape = Class.forName(getValue(currentLine));
+				Constructor<?> ctor = classShape.getConstructor();
+				Shape shape = (Shape) ctor.newInstance(new Object[] { });
+				if(shape != null){
+					String property = br.readLine();
+					Map<String,Double> properties = new HashMap<String,Double>();
+					property = br.readLine();
+					while(true){
+						property = br.readLine();
+						if((property.equals("}"))) {
+							break;
+						}
+						String key = getKey(property);
+						String value = getValue(property);
+						properties.put(key, Double.parseDouble(value));
+					}
+					shape.setProperties(properties);
+					p.addShape(shape);
+					currentLine = br.readLine();
+					if(currentLine==null) {
+						break;
+					}
+				}
+				else if(shape == null && counter == 0){
+					p.addShape(shape);
+					counter = 1;
+				}
+			}
+		}
+		br.close();
+	}
+	private static String getValue(String string){
+		String[] splited = string.split(":");
+		String value = splited[1];
+		if(value.charAt(value.length()-1) == ','){
+			value = value.substring(1, value.length()-2);
+		}
+		else{
+			value = value.substring(1, value.length()-1);
+		}
+		return value;
+	}
+	
+	private static String getKey(String string){
+		String[] splited = string.split(":");
+		String value = splited[0];
+		value = value.substring(1, value.length()-1);
+		return value;
 	}
 }

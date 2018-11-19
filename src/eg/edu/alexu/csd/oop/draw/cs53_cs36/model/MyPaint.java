@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.draw.cs53_cs36.model;
 
+import java.awt.Graphics;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -42,8 +43,12 @@ public class MyPaint implements DrawingEngine {
 	@Override
 	public void refresh(Object canvas) {
 		// TODO Auto-generated method stub
+		if(canvas.getClass().getName().equals("javax.swing.DebugGraphics")) {
+			canvas = (Graphics) canvas;
+		}else {
 		GraphicsContext g = ((Canvas)canvas).getGraphicsContext2D();
 		g.clearRect(0, 0, ((Canvas)canvas).getWidth(), ((Canvas)canvas).getHeight());
+		}
 		for(int i=0;i< MyShapes.size();i++) {
 			MyShapes.get(i).draw(canvas);
 		}
@@ -156,14 +161,37 @@ public class MyPaint implements DrawingEngine {
     @Override
 	public void save(String path) {
 		// TODO Auto-generated method stub
-    	
+    	String s = path.substring(path.lastIndexOf("."));
+    	if(s.equalsIgnoreCase(".xml")) {
+    		FileManager.WriteXML(path, this);
+    	}else {
+    		try {
+				FileManager.WriteJSON(path, this);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
 
 	}
 
 	@Override
 	public void load(String path) {
 		// TODO Auto-generated method stub
-			
+			MyShapes = new LinkedList<Shape>();
+	    	String s = path.substring(path.lastIndexOf("."));
+	    	if(s.equalsIgnoreCase(".xml")) {
+	    		FileManager.loadXML(path, this);
+	    	}else {
+	    		try {
+					FileManager.loadJson(path, this);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    	}
+	    	undo = new Stack<LinkedList<Shape>>();
+	    	redo = new Stack<LinkedList<Shape>>();
 					
 	}
 	@SuppressWarnings("unchecked")
