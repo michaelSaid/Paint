@@ -23,7 +23,7 @@ public class MyPaint implements DrawingEngine {
 	private Stack<LinkedList<Shape>> redo;
 	private List<Class<? extends Shape>> supportedShapes;
 	@SuppressWarnings("unchecked")
-	public MyPaint() {
+	public MyPaint() throws Exception{
 		// TODO Auto-generated constructor stub
 		MyShapes = new LinkedList<>();
 		undo = new Stack<>();
@@ -193,5 +193,11 @@ public class MyPaint implements DrawingEngine {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public int undoSize() {
+		return this.undo.size();
+	}
+	public int redoSize() {
+		return this.redo.size();
 	}
 }

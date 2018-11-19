@@ -36,6 +36,8 @@ public class Ellipse extends MyShape {
 	             ((Canvas) canvas).getGraphicsContext2D(); 
 		g.setFill((Color)getFillColor());
 		g.setStroke((Color)getColor());
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		g.fillOval(((Point)getPosition()).x, ((Point)getPosition()).y, width, height);
 		g.strokeOval(((Point)getPosition()).x, ((Point)getPosition()).y, width, height);
 		
@@ -55,12 +57,16 @@ public class Ellipse extends MyShape {
 	@Override
 	public boolean isCountainsPoint(int x, int y) {
 		// TODO Auto-generated method stub
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		return x>=((Point)getPosition()).x&&y>=((Point)getPosition()).y
 				&&x<((Point)getPosition()).x+this.width&&y<((Point)getPosition()).y+this.height;
 	}
 	@Override
 	public Point[] getBonds() {
 		// TODO Auto-generated method stub
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		Point p1 = new Point(getProperties().get("x1").intValue(),
 				getProperties().get("y1").intValue());
 		Point p4 = new Point(getProperties().get("x1").intValue() + this.width.intValue(),
@@ -71,6 +77,8 @@ public class Ellipse extends MyShape {
 	}
 	@Override
 	public void reSizeBy(int x, int y) {
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		// TODO Auto-generated method stub
 		this.width = Math.abs(this.width+=x);
 		this.height =Math.abs(this.height+=y);

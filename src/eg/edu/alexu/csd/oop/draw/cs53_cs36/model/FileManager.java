@@ -21,7 +21,11 @@ import org.w3c.dom.NodeList;
 import eg.edu.alexu.csd.oop.draw.Shape;
 
 public class FileManager {
-	public void WriteXML(String path , MyPaint paint) {
+	
+	private FileManager() {
+		
+	}
+	public static void WriteXML(String path , MyPaint paint) {
 		try {
 			FileWriter fw = new FileWriter(path, true);
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -62,7 +66,7 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
-	public void loadXML(String path , MyPaint p){
+	public static void loadXML(String path , MyPaint p){
 		File file = new File(path);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		try {
@@ -110,10 +114,10 @@ public class FileManager {
 		}
 		
 	}
-	public void WriteJSON(String path , MyPaint paint) {
+	public static void WriteJSON(String path , MyPaint paint) {
 		
 	}
-	public void loadJson(String path , MyPaint p) {
+	public static void loadJson(String path , MyPaint p) {
 		
 	}
 }

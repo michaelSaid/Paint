@@ -20,10 +20,14 @@ public abstract class MyShape implements Shape {
 		properties = new HashMap<>();
 		properties.put("color", Double.valueOf(getRGB(defaultColor)));
 		properties.put("fillcolor", Double.valueOf(getRGB(defaultFillColor)));
+		getProperties().put("x1", 0.0);
+		getProperties().put("y1", 0.0);
 	}
 	@Override
 	public void setPosition(Object position) {
 		// TODO Auto-generated method stub
+		getProperties().put("x1", ((Point) position).getX());
+		getProperties().put("y1", ((Point) position).getY());
 		this.position = (Point) position;
 	}
 

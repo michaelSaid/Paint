@@ -38,8 +38,11 @@ public class Rectangle extends MyShape {
 		g.setFill((Color)getFillColor());
 		g.setStroke((Color)getColor());		
 		Point p1 = new Point(getProperties().get("x1").intValue(), getProperties().get("y1").intValue());
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		g.fillRect(p1.getX(), p1.getY(), this.width,this.height);
 		g.strokeRect(p1.getX(), p1.getY(), this.width,this.height);
+//		g.strokeRoundRect(p1.getX(), p1.getY(), this.width,this.height,40,40);
 	}
 
 	@Override
@@ -56,12 +59,16 @@ public class Rectangle extends MyShape {
 	@Override
 	public boolean isCountainsPoint(int x, int y) {
 		// TODO Auto-generated method stub
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		return x>=((Point)getPosition()).x&&y>=((Point)getPosition()).y
 				&&x<((Point)getPosition()).x+this.width&&y<((Point)getPosition()).y+this.height;
 	}
 	@Override
 	public Point[] getBonds() {
 		// TODO Auto-generated method stub
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		Point p1 = new Point(getProperties().get("x1").intValue(),
 				getProperties().get("y1").intValue());
 		Point p4 = new Point(getProperties().get("x1").intValue() + this.width.intValue(),
@@ -73,6 +80,8 @@ public class Rectangle extends MyShape {
 	@Override
 	public void reSizeBy(int x, int y) {
 		// TODO Auto-generated method stub
+		this.width = getProperties().get("width");
+		this.height=getProperties().get("height");
 		this.width = Math.abs(this.width+=x);
 		this.height =Math.abs(this.height+=y);
 		getProperties().put("height", this.height);
