@@ -153,16 +153,46 @@ public class MyPaint implements DrawingEngine {
     	}
     }
 
-	@Override
+    @Override
 	public void save(String path) {
 		// TODO Auto-generated method stub
-		
+				int dotIndex = path.lastIndexOf('.');
+				String extension = path.substring(dotIndex + 1);
+
+				if (extension.equalsIgnoreCase("JsOn")) {
+					Json json = new Json(this);
+					try {
+						json.save(path, MyShapes);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					throw new RuntimeException("unexpected extension");
+				}
 	}
 
 	@Override
 	public void load(String path) {
 		// TODO Auto-generated method stub
-		
+				MyShapes.clear();
+				undo.clear();
+				redo.clear();
+				int dotIndex = path.lastIndexOf('.');
+				String extension = path.substring(dotIndex + 1);if (extension.equalsIgnoreCase("JsOn")) {
+					Json json = new Json(this);
+					try {
+						json.load(path, MyShapes);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					throw new RuntimeException("unexpected extension");
+				}
+				undo.clear();
+				redo.clear();
+					
 	}
 	@SuppressWarnings("unchecked")
 	public void installPluginShape(String jarPath) {
