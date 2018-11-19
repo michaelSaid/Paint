@@ -16,6 +16,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 public class Controller implements Initializable {
 
@@ -40,6 +41,8 @@ public class Controller implements Initializable {
     @FXML
     private ToggleButton reSizeButton;
     @FXML
+    private ToggleButton selectButton;
+    @FXML
     private Button undoButton;
     @FXML
     private Button redoButton;
@@ -55,6 +58,7 @@ public class Controller implements Initializable {
 	private ToggleGroup toggleGroupForShapes;
 	private MyShape shapeBeingDragged = null;
 	private MyShape oldShape = null;
+	private MyShape selectedShape = null;
 	MyPaint paintEngine;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -75,6 +79,7 @@ public class Controller implements Initializable {
 		ellipseButton.setToggleGroup(toggleGroupForShapes);
 		moveButton.setToggleGroup(toggleGroupForShapes);
 		reSizeButton.setToggleGroup(toggleGroupForShapes);
+		selectButton.setToggleGroup(toggleGroupForShapes);
 
 	}
 	@FXML
@@ -82,7 +87,7 @@ public class Controller implements Initializable {
 		paintEngine.refresh(finalCanvas);
 		this.startX = this.lastX = e.getX();
 		this.startY= this.lastY = e.getY();
-		if(typeToDo.equals("Move")||typeToDo.equals("Resize")) {
+		if(typeToDo.equals("Move")||typeToDo.equals("Resize")||typeToDo.equals("Select")) {
 			for(int i=paintEngine.getShapes().length-1;i>=0;i--) {
 				 oldShape = (MyShape) paintEngine.getShapes()[i];
 				if(oldShape.isCountainsPoint(startX.intValue(),startY.intValue())) {
@@ -123,6 +128,8 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
+		if(typeToDo.equals("Select"))
+			return;
 		this.lastX = e.getX();
 		this.lastY = e.getY();
 		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
@@ -144,6 +151,8 @@ public class Controller implements Initializable {
 			}
 			return;
 		}
+		if(typeToDo.equals("Select"))
+			return;
 		Class<?> classShape = Class.forName("eg.edu.alexu.csd.oop.draw.cs53_cs36.shapes."+typeToDo);
 		Constructor<?> ctor = classShape.getConstructors()[0];
 		Shape shape = (Shape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
@@ -160,19 +169,56 @@ public class Controller implements Initializable {
 		System.out.println(typeToDo);
 	}
 	@FXML
-	private void clickUndoORredo(ActionEvent e) throws Exception {
+	private void clickButtons(ActionEvent e) throws Exception {
+		
 		Button b = (Button) e.getSource();
 		switch(b.getText()) {
 		case"Undo":paintEngine.undo();break;
 		case"Redo":paintEngine.redo();break;
-		case"Copy":oldShape = (MyShape) shapeBeingDragged.clone();break;
-		case"Paste":{Point p = (Point) oldShape.getPosition();
-		oldShape.setPosition(new Point(p.x+5, p.y+5));
-			paintEngine.addShape(oldShape);
-			}break;
+		case"Copy":copy();break;
+		case"Paste":paste();break;
+		default:
+			break;
 		}
 		paintEngine.refresh(finalCanvas);		
 		return;
+	}
+	@FXML
+	private void ClickKeys(KeyEvent e) {
+		
+	 if(e.isShortcutDown()) {
+		switch(((KeyEvent)e).getCode()) {
+		case C:copy();break;
+		case V:paste();break;
+		case Z:paintEngine.undo();break;
+		case Y:paintEngine.redo();break;
+		default:
+			break;
+		}
+	}
+		paintEngine.refresh(finalCanvas);		
+		return;
+	}
+	private void copy() {
+		try {
+			selectedShape = (MyShape) shapeBeingDragged.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		selectButton.setSelected(false);
+		typeToDo = "";
+	}
+	private void paste() {
+		selectedShape.moveBy(20, 20);
+		try {
+			paintEngine.addShape((Shape) selectedShape.clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		selectButton.setSelected(false);
+		typeToDo = "";
 	}
 
 }
