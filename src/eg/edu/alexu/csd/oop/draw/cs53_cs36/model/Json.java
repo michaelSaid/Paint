@@ -48,7 +48,7 @@ public class Json {
 	
 	public static void load(String path, LinkedList<Shape> shapes) throws IOException{
 			int counter = 0;
-			ShapeDrawJ creating = new ShapeDrawJ(engine);
+			ShapeDrawJ factory = new ShapeDrawJ(engine);
 
 			
 			br = new BufferedReader(new FileReader(path));
@@ -60,7 +60,7 @@ public class Json {
 			if(!builder.toString().equals("nullnull")){
 				while(!((currentLine = br.readLine()).equals("]"))){
 					currentLine = br.readLine();
-					Shape shape = creating.createShape(getValue(currentLine));
+					Shape shape = factory.createShape(getValue(currentLine));
 					if(shape != null){
 						currentLine = br.readLine();
 						int x = Integer.parseInt(getValue(currentLine));
@@ -108,10 +108,10 @@ public class Json {
 		writeKeyValue("Kind",shape.getClass().getSimpleName());
 		bw.write(",\n");
 		try{
-			writeKeyValue("Color",String.valueOf(((Color) shape).getRGB()));
+			writeKeyValue("Color",String.valueOf((shape.getColor())));
 		}catch (Exception e) {
 			shape.setColor(Color.black);
-			writeKeyValue("Color",String.valueOf(((Color) shape.getColor()).getRGB()));
+			writeKeyValue("Color",String.valueOf((shape.getColor())));
 		}
 		bw.write(",\n");
 		try{
@@ -124,10 +124,10 @@ public class Json {
 		writeKeyValue("PositionY",String.valueOf(((Point) shape.getPosition()).getY()));
 		bw.write(",\n");
 		try{
-			writeKeyValue("FillColor",String.valueOf(((Color) shape.getFillColor()).getRGB()));
+			writeKeyValue("FillColor",String.valueOf((shape.getFillColor())));
 		}catch (Exception e) {
 			shape.setFillColor(Color.WHITE);
-			writeKeyValue("FillColor",String.valueOf(((Color) shape.getFillColor()).getRGB()));
+			writeKeyValue("FillColor",String.valueOf((shape.getFillColor())));
 		}
 		Map<String,Double> properties = shape.getProperties();
 		if(properties != null){
@@ -175,4 +175,5 @@ public class Json {
 		value = value.substring(1, value.length()-1);
 		return value;
 	}
+	
 }

@@ -16,7 +16,6 @@ public class ShapeDrawJ {
 		this.engine = engine;
 	}
 
-	
 	public Shape createShape(String shape) {
 
 		for (Class<? extends Shape> i : engine.getSupportedShapes()) {

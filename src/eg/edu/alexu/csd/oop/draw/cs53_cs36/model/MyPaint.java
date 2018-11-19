@@ -156,20 +156,21 @@ public class MyPaint implements DrawingEngine {
     @Override
 	public void save(String path) {
 		// TODO Auto-generated method stub
-				int dotIndex = path.lastIndexOf('.');
-				String extension = path.substring(dotIndex + 1);
+    	int dotIndex = path.lastIndexOf('.');
+		String extension = path.substring(dotIndex + 1);
 
-				if (extension.equalsIgnoreCase("JsOn")) {
-					Json json = new Json(this);
-					try {
-						json.save(path, MyShapes);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} else {
-					throw new RuntimeException("unexpected extension");
-				}
+		 if (extension.equalsIgnoreCase("JsOn")) {
+			Json json = new Json(this);
+			try {
+				json.save(path, MyShapes);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			throw new RuntimeException("unexpected extension");
+		}
+
 	}
 
 	@Override
@@ -190,8 +191,6 @@ public class MyPaint implements DrawingEngine {
 				} else {
 					throw new RuntimeException("unexpected extension");
 				}
-				undo.clear();
-				redo.clear();
 					
 	}
 	@SuppressWarnings("unchecked")
