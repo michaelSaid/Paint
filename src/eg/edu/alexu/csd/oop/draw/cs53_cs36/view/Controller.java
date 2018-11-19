@@ -193,7 +193,7 @@ public class Controller implements Initializable {
 		switch(((KeyEvent)e).getCode()) {
 		case C:copy();break;
 		case V:paste();break;
-		case D:Delete();break;
+		case DELETE :Delete();break;
 		case Z:paintEngine.undo();break;
 		case Y:paintEngine.redo();break;
 		default:
