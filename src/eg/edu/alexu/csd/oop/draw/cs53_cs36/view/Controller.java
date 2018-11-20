@@ -484,6 +484,10 @@ public class Controller implements Initializable {
 			selectedShape.setFillColor((Object)selectedColor);
 			paintEngine.updateShape(oldShape, selectedShape);
 			System.out.println(selectedShape.getFillColor());
+			}else if(round!=null) {
+				java.awt.Color awtColor = new java.awt.Color(MyShape.getRGB(selectedColor));
+				round.setFillColor(awtColor);
+				paintEngine.updateShape(oldRound, round);
 			}
 		paintEngine.refresh(finalCanvas);
 			selectButton.setSelected(false);
@@ -498,6 +502,10 @@ public class Controller implements Initializable {
 			selectedShape.setColor((Object)selectedColor);
 			paintEngine.updateShape(oldShape, selectedShape);
 			System.out.println(selectedShape.getColor());
+			}else if(round!=null) {
+				java.awt.Color awtColor = new java.awt.Color(MyShape.getRGB(selectedColor));
+				round.setColor(awtColor);
+				paintEngine.updateShape(oldRound, round);
 			}
 		paintEngine.refresh(finalCanvas);
 		
@@ -510,6 +518,9 @@ public class Controller implements Initializable {
 		if(selectedShape!=null) {
 			selectedShape.getProperties().put("stroke" ,strokeValue);
 			paintEngine.updateShape(oldShape, selectedShape);
+		}else if(round!=null) {
+			round.getProperties().put("stroke" ,strokeValue);
+			paintEngine.updateShape(oldRound, round);
 		}
 		paintEngine.refresh(finalCanvas);
 		selectButton.setSelected(false);
