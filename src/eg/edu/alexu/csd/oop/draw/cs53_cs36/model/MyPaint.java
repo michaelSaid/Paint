@@ -1,6 +1,7 @@
 package eg.edu.alexu.csd.oop.draw.cs53_cs36.model;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.net.URL;
@@ -53,7 +54,10 @@ public class MyPaint implements DrawingEngine {
 		g.clearRect(0, 0, ((Canvas)canvas).getWidth(), ((Canvas)canvas).getHeight());
 		}
 		for(int i=0;i< MyShapes.size();i++) {
-			MyShapes.get(i).draw(canvas);
+			if(MyShapes.get(i).getClass().getName().equals("eg.edu.alexu.csd.oop.draw.RoundRectangle"))
+				drawRounRect(canvas, MyShapes.get(i));
+			else
+				MyShapes.get(i).draw(canvas);
 		}
 	}
 
@@ -263,5 +267,26 @@ public class MyPaint implements DrawingEngine {
 		}
 		return null;
 		
+	}
+	public Class<? extends Shape> createClass(String nameClass) {
+		for(Class<? extends Shape> x:this.supportedShapes) {
+			if(x.getName().equals(nameClass)) {
+				return x;
+			}
+		}
+		return null;
+		
+	}
+	public void drawRounRect(Object canvas , Shape r) {
+		GraphicsContext g = ((Canvas)canvas).getGraphicsContext2D();
+		double x1 = ((Point)r.getPosition()).getX();
+		double y1 = ((Point)r.getPosition()).getY();
+		double width = r.getProperties().get("Width");
+		double height = r.getProperties().get("Length");
+		g.setLineWidth(r.getProperties().get("stroke"));
+		g.setStroke(MyShape.toColor(((java.awt.Color)r.getColor()).getRGB()));
+		g.setFill(MyShape.toColor(((java.awt.Color)r.getFillColor()).getRGB()));
+		g.fillRoundRect(x1, y1, width, height, 40,40);
+		g.strokeRoundRect(x1, y1, width, height, 40,40);
 	}
 }

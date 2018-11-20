@@ -88,14 +88,14 @@ public abstract class MyShape implements Shape {
 	public abstract boolean isCountainsPoint(int x, int y);
 	@Override
 	public abstract Object clone() throws CloneNotSupportedException;
-	private int getRGB(Color col) {
+	public static int getRGB(Color col) {
 	    int r = ((int)col.getRed()*255);
 	    int g = ((int)col.getGreen() * 255);
 	    int b = ((int)col.getBlue() * 255);
 	    int rgb = (r << 16) + (g << 8) + b;
 	    return rgb;
 	}
-	private Color toColor(int rgb) {
+	public static Color toColor(int rgb) {
 		java.awt.Color awtColor = new java.awt.Color(rgb);
 		int r = awtColor.getRed();
 		int g = awtColor.getGreen();
@@ -112,6 +112,7 @@ public abstract class MyShape implements Shape {
 		GraphicsContext g =  
 	             ((Canvas) canvas).getGraphicsContext2D(); 
 		Point[] bonds = getBonds();
+		g.setStroke(Color.BLACK);
 		g.strokeRect(bonds[0].x - margin, bonds[0].y - margin, bonds[3].x - bonds[0].x + 2 * margin,
 			bonds[3].y - bonds[0].y + 2 * margin);
 

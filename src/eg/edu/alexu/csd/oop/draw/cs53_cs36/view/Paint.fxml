@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
+<VBox onKeyPressed="#ClickKeys" prefHeight="571.0" prefWidth="823.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
    <children>
       <SplitPane dividerPositions="0.0632688927943761" orientation="VERTICAL" prefHeight="569.0" prefWidth="760.0">
          <items>
@@ -38,7 +38,7 @@
             </MenuBar>
             <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="518.0" prefWidth="760.0">
                <children>
-                  <ToolBar layoutY="1.0" prefHeight="54.0" prefWidth="760.0">
+                  <ToolBar layoutY="1.0" prefHeight="54.0" prefWidth="854.0">
                      <items>
                         <Button fx:id="undoButton" mnemonicParsing="false" onAction="#clickButtons" text="Undo" />
                         <Button fx:id="redoButton" mnemonicParsing="false" onAction="#clickButtons" text="Redo" />
@@ -56,9 +56,9 @@
                           </items>
                         </MenuButton>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FillColor:" />
-                        <ColorPicker fx:id="color" onAction="#Colorfill" promptText="colorfill" />
+                        <ColorPicker fx:id="color" onAction="#Colorfill" prefHeight="31.0" prefWidth="97.0" promptText="colorfill" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FrameColor" />
-                        <ColorPicker fx:id="colorframe" onAction="#Colorframe" promptText="colorframe" />
+                        <ColorPicker fx:id="colorframe" onAction="#Colorframe" prefHeight="31.0" prefWidth="100.0" promptText="colorframe" />
                      </items>
                   </ToolBar>
                   <ToolBar layoutY="53.0" orientation="VERTICAL" prefHeight="476.0" prefWidth="135.0">
@@ -69,13 +69,14 @@
                         <ToggleButton fx:id="rectangleButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Rectangle" />
                         <ToggleButton fx:id="squareButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Square" />
                         <ToggleButton fx:id="triangleButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Triangle" />
+                        <ToggleButton fx:id="roundButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="RoundRectangle" />
                         <ToggleButton fx:id="moveButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Move" />
                         <ToggleButton fx:id="reSizeButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Resize" />
                         <ToggleButton fx:id="selectButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Select" />
                      </items>
                   </ToolBar>
-                  <Canvas fx:id="finalCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
-                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
+                  <Canvas fx:id="finalCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="720.0" />
+                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="720.0" />
                </children>
             </AnchorPane>
          </items>

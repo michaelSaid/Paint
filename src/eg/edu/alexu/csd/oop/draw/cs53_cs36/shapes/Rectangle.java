@@ -43,7 +43,6 @@ public class Rectangle extends MyShape {
 		this.height=getProperties().get("height");
 		g.fillRect(p1.getX(), p1.getY(), this.width,this.height);
 		g.strokeRect(p1.getX(), p1.getY(), this.width,this.height);
-//		g.strokeRoundRect(p1.getX(), p1.getY(), this.width,this.height,40,40);
 	}
 
 	@Override

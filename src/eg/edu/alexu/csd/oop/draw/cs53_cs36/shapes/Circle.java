@@ -15,8 +15,6 @@ public class Circle extends Ellipse {
 		this.raduis = Math.sqrt(Math.pow(this.getWidth(), 2) + Math.pow(Math.abs(this.getHeight()), 2));
 		this.setWidth(this.raduis*2);
 		this.setHeight(this.raduis*2);
-		getProperties().put("x1", startPoint.getX()-raduis);
-		getProperties().put("y1", startPoint.getY()-raduis);
 		setPosition(new Point((int)startPoint.x-raduis.intValue(),startPoint.y-raduis.intValue()));
 	}
 	public Circle()

@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -53,6 +55,8 @@ public class Controller implements Initializable {
     @FXML
     private ToggleButton triangleButton;
     @FXML
+    private ToggleButton roundButton;
+    @FXML
     private ToggleButton circleButton;
     @FXML
     private ToggleButton moveButton;
@@ -78,11 +82,13 @@ public class Controller implements Initializable {
     private Slider strokeSlider;
 	private GraphicsContext workingPicture;
 	private Double startX, startY, lastX, lastY;
-	private String typeToDo = "Line";
+	private String typeToDo = "";
 	private ToggleGroup toggleGroupForShapes;
 	private MyShape shapeBeingDragged = null;
 	private MyShape oldShape = null;
 	private MyShape selectedShape = null;
+	private Shape oldRound = null;
+	private Shape round = null;
 	private Stage stage;
 	MyPaint paintEngine;	
 	@Override
@@ -105,9 +111,11 @@ public class Controller implements Initializable {
 		moveButton.setToggleGroup(toggleGroupForShapes);
 		reSizeButton.setToggleGroup(toggleGroupForShapes);
 		selectButton.setToggleGroup(toggleGroupForShapes);
+		roundButton.setToggleGroup(toggleGroupForShapes);
 		strokeSlider.setMin(1);
 		strokeSlider.setMax(15);
-
+		colorframe.setValue(Color.BLACK);
+		color.setValue(Color.WHITE);
 	}
 	@FXML
 	private void onMousePressedListener(MouseEvent e) throws Exception {
@@ -116,6 +124,8 @@ public class Controller implements Initializable {
 		this.startY= this.lastY = e.getY();
 		if(typeToDo.equals("Move")||typeToDo.equals("Resize")||typeToDo.equals("Select")) {
 			for(int i=paintEngine.getShapes().length-1;i>=0;i--) {
+				
+			if(!paintEngine.getShapes()[i].getClass().getName().equals("eg.edu.alexu.csd.oop.draw.RoundRectangle")) {
 				 oldShape = (MyShape) paintEngine.getShapes()[i];
 				if(oldShape.isCountainsPoint(startX.intValue(),startY.intValue())) {
 					selectedShape=(MyShape) oldShape.clone();
@@ -123,6 +133,14 @@ public class Controller implements Initializable {
 					shapeBeingDragged = (MyShape) oldShape.clone();
 					System.out.println("Move is detected");
 					return;
+				}
+			}else {
+				oldRound = paintEngine.getShapes()[i];
+				if(roundContains(startX, startY ,oldRound)) {
+					round =  (Shape) oldRound.clone();
+					System.out.println("round is detected");
+					return;
+					}
 				}
 			}
 			return;
@@ -140,6 +158,12 @@ public class Controller implements Initializable {
 				workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 				shapeBeingDragged.drawBonds(workingCanvas);
 				shapeBeingDragged.draw(workingCanvas);
+			}else if(round!=null) {
+				roundMoveBy(lastX.intValue()-startX.intValue(), lastY.intValue()-startY.intValue() ,round);
+				this.startX = this.lastX;
+				this.startY = this.lastY;
+				workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+				paintEngine.drawRounRect(workingCanvas, round);
 			}
 			return;
 		}
@@ -153,6 +177,12 @@ public class Controller implements Initializable {
 				workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 				shapeBeingDragged.drawBonds(workingCanvas);
 				shapeBeingDragged.draw(workingCanvas);
+			}else if(round!=null) {
+				roundResizeBy(lastX.intValue()-startX.intValue(), lastY.intValue()-startY.intValue(),round);
+				this.startX = this.lastX;
+				this.startY = this.lastY;
+				workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+				paintEngine.drawRounRect(workingCanvas, round);
 			}
 			return;
 		}
@@ -161,11 +191,33 @@ public class Controller implements Initializable {
 		this.lastX = e.getX();
 		this.lastY = e.getY();
 		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
-		Class<?> classShape = Class.forName("eg.edu.alexu.csd.oop.draw.cs53_cs36.shapes."+typeToDo);
+		String nameClass = "eg.edu.alexu.csd.oop.draw.";
+		if(!typeToDo.equals("RoundRectangle")) {
+			nameClass+="cs53_cs36.shapes.";
+		}
+		Class<? extends Shape> classShape = paintEngine.createClass(nameClass+typeToDo);
+		if(classShape!=null) {
 		Constructor<?> ctor = classShape.getConstructors()[0];
-		Shape shape = (Shape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
-		shape.draw(workingCanvas);
+		if(!typeToDo.equals("RoundRectangle")) {
+			MyShape shape = (MyShape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
+			shape.getProperties().put("stroke",strokeSlider.getValue());
+			shape.setColor(colorframe.getValue());
+			shape.setFillColor(color.getValue());
+			shape.draw(workingCanvas);
+		}else {
+			Double x1 = Math.min(startX, lastX);
+			Double y1 = Math.min(startY, lastY);
+			double height = Math.abs(startY - lastY);
+			double width = Math.abs(startX - lastX);
+			workingPicture.setLineWidth(strokeSlider.getValue());
+			workingPicture.setFill(color.getValue());
+			workingPicture.setStroke(colorframe.getValue());
+			workingPicture.fillRoundRect(x1, y1, width, height, 40,40);
+			workingPicture.strokeRoundRect(x1, y1, width, height, 40,40);
+		}
+
 	}
+}
 	@FXML
 	private void onMouseReleaseListener(MouseEvent e) throws Exception {
 		if(typeToDo.equals("Move")||typeToDo.equals("Resize")) {
@@ -176,19 +228,58 @@ public class Controller implements Initializable {
 			shapeBeingDragged = null;
 			oldShape=null;
 			workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+			}else if(round!=null&&oldRound!=null) {
+				paintEngine.updateShape(oldRound, round);
+				paintEngine.refresh(finalCanvas);
+				round= null;
+				oldRound=null;
+				workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 			}
 			return;
 		}
 		if(typeToDo.equals("Select")||typeToDo.isEmpty())
 			return;
-		Class<?> classShape = Class.forName("eg.edu.alexu.csd.oop.draw.cs53_cs36.shapes."+typeToDo);
+		String nameClass = "eg.edu.alexu.csd.oop.draw.";
+		if(!typeToDo.equals("RoundRectangle")) {
+			nameClass+="cs53_cs36.shapes.";
+		}
+		Class<? extends Shape> classShape = paintEngine.createClass(nameClass+typeToDo);
+		if(classShape!=null) {
 		Constructor<?> ctor = classShape.getConstructors()[0];
-		Shape shape = (Shape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
-		paintEngine.addShape(shape);
-		paintEngine.refresh(finalCanvas);
-		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+		if(!typeToDo.equals("RoundRectangle")) {
+			MyShape shape = (MyShape) ctor.newInstance(new Object[] {new Point(startX.intValue(), startY.intValue()),new Point(lastX.intValue(), lastY.intValue()) });
+			shape.getProperties().put("stroke",strokeSlider.getValue());
+			shape.setColor(colorframe.getValue());
+			shape.setFillColor(color.getValue());
+			paintEngine.addShape(shape);
+			paintEngine.refresh(finalCanvas);
+			workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+		}else {
+			Shape	shape = (Shape) ctor.newInstance(new Object[]{});
+			Double x1 = Math.min(startX, lastX);
+			Double y1 = Math.min(startY, lastY);
+			double height = Math.abs(startY - lastY);
+			double width = Math.abs(startX - lastX);
+			Map<String,Double>map = new HashMap<>();
+			map.put("Length", height);
+			map.put("Width", width);
+			map.put("ArcLength", 40.0);
+			map.put("ArcWidth", 40.0);
+			map.put("stroke",strokeSlider.getValue());
+			shape.setProperties(map);
+			System.out.println(shape.getProperties());
+			shape.setPosition(new Point(x1.intValue(),y1.intValue()));
+			java.awt.Color awtColor = new java.awt.Color(MyShape.getRGB(colorframe.getValue()));
+			shape.setColor(awtColor);
+			awtColor = new java.awt.Color(MyShape.getRGB(color.getValue()));
+			shape.setFillColor(awtColor);
+			paintEngine.addShape(shape);
+			paintEngine.refresh(finalCanvas);
+			workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
+		}
 		
 	}
+}
 	@FXML
 	private void clickButtonShapes(ActionEvent e) {
 		paintEngine.refresh(finalCanvas);
@@ -239,8 +330,11 @@ public class Controller implements Initializable {
 	private void Delete(){
 		if(selectedShape!=null) {
 		paintEngine.removeShape((Shape)selectedShape);
+		}else if(round!=null) {
+			paintEngine.removeShape(round);
 		}
 		selectButton.setSelected(false);
+		if(typeToDo.equals("Select"))
 		typeToDo = "";	
 	}
 	private void copy() {
@@ -251,8 +345,16 @@ public class Controller implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}else if(round!=null) {
+		try {
+			oldRound = (Shape) round.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 		selectButton.setSelected(false);
+		if(typeToDo.equals("Select"))
 		typeToDo = "";
 	}
 	private void paste() {
@@ -264,8 +366,17 @@ public class Controller implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}else if(oldRound!=null) {
+		roundMoveBy(20, 20, oldRound);
+		try {
+			paintEngine.addShape((Shape) oldRound.clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 		selectButton.setSelected(false);
+		if(typeToDo.equals("Select"))
 		typeToDo = "";
 	}
 	
@@ -376,7 +487,8 @@ public class Controller implements Initializable {
 			}
 		paintEngine.refresh(finalCanvas);
 			selectButton.setSelected(false);
-			typeToDo = "";	
+			if(typeToDo.equals("Select"))
+				typeToDo = "";	
 	}
 	@FXML
 	private void Colorframe(ActionEvent event){
@@ -390,7 +502,8 @@ public class Controller implements Initializable {
 		paintEngine.refresh(finalCanvas);
 		
 			selectButton.setSelected(false);
-			typeToDo = "";	
+			if(typeToDo.equals("Select"))
+				typeToDo = "";	
 	}
 	@FXML void Stroke() {
 		double strokeValue = strokeSlider.getValue();
@@ -400,8 +513,24 @@ public class Controller implements Initializable {
 		}
 		paintEngine.refresh(finalCanvas);
 		selectButton.setSelected(false);
-		typeToDo = "";	
+		if(typeToDo.equals("Select"))
+			typeToDo = "";	
 	}
-	
-	
+	private boolean roundContains(double x , double y , Shape r) {
+		double width = r.getProperties().get("Width");
+		double height=r.getProperties().get("Length");
+		return x>=((Point)r.getPosition()).x&&y>=((Point)r.getPosition()).y
+				&&x<((Point)r.getPosition()).x+width&&y<((Point)r.getPosition()).y+height;
+	}
+	private void roundMoveBy(int x , int y , Shape r) {
+		r.setPosition(new Point(((Point)r.getPosition()).x+x,((Point)r.getPosition()).y+y));
+	}
+	private void roundResizeBy(int x , int y , Shape r) {
+		double width = r.getProperties().get("Width");
+		double height=r.getProperties().get("Length");
+		width = Math.abs(width+=x);
+		height =Math.abs(height+=y);
+		r.getProperties().put("Length", height);
+		r.getProperties().put("Width", width);
+	}
 }
