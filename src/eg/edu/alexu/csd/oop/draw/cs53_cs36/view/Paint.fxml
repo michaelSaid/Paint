@@ -2,6 +2,7 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -11,8 +12,9 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
+<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
    <children>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="569.0" prefWidth="760.0">
          <items>
@@ -56,6 +58,10 @@
                         <Button fx:id="pasteButton" mnemonicParsing="false" onAction="#clickButtons" text="Paste" />
                         <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickButtons" text="Delete" />
                         <Button mnemonicParsing="false" onAction="#snapShot" text="snapShot" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FillColor:" />
+                        <ColorPicker fx:id="color" onAction="#Colorfill" promptText="colorfill" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FrameColor" />
+                        <ColorPicker fx:id="colorframe" onAction="#Colorframe" promptText="colorframe" />
                      </items>
                   </ToolBar>
                   <ToolBar layoutY="53.0" orientation="VERTICAL" prefHeight="476.0" prefWidth="135.0">
@@ -77,5 +83,6 @@
             </AnchorPane>
          </items>
       </SplitPane>
+      <ColorPicker />
    </children>
 </VBox>

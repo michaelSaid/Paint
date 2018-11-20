@@ -25,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -69,6 +70,10 @@ public class Controller implements Initializable {
     private Button pasteButton;
     @FXML
     private Button deleteButton;
+    @FXML
+    private ColorPicker color;
+    @FXML
+    private ColorPicker colorframe;
 	private GraphicsContext workingPicture;
 	private Double startX, startY, lastX, lastY;
 	private String typeToDo = "Line";
@@ -354,5 +359,44 @@ public class Controller implements Initializable {
         if(file!=null) {
         	ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
         }
-}
+    }
+	
+	@FXML
+	private void Color(ActionEvent event){
+		Color selectedColor = color.getValue();
+		System.out.println(selectedColor);
+		if(selectedShape!=null) {
+			selectedShape.setFillColor((Object)selectedColor);
+			}
+		System.out.println(selectedShape.getFillColor());
+			selectButton.setSelected(false);
+			typeToDo = "";	
+	}
+	@FXML
+	private void Colorfill(ActionEvent event){
+		Color selectedColor = color.getValue();
+		System.out.println(selectedColor);
+		if(selectedShape!=null) {
+			selectedShape.setFillColor((Object)selectedColor);
+			}
+		System.out.println(selectedShape.getFillColor());
+		paintEngine.refresh(finalCanvas);
+			selectButton.setSelected(false);
+			typeToDo = "";	
+	}
+	@FXML
+	private void Colorframe(ActionEvent event){
+		Color selectedColor = colorframe.getValue();
+		System.out.println(selectedColor);
+		if(selectedShape!=null) {
+			selectedShape.setColor((Object)selectedColor);
+			}
+		System.out.println(selectedShape.getColor());
+		paintEngine.refresh(finalCanvas);
+		
+			selectButton.setSelected(false);
+			typeToDo = "";	
+	}
+	
+	
 }

@@ -13,7 +13,7 @@ public abstract class MyShape implements Shape {
 
 	private Point position;
 	private Map<String,Double>properties;
-	private Color defaultColor = Color.BLACK;
+	public Color defaultColor = Color.BLACK;
 	private Color defaultFillColor = Color.WHITE;
 	public MyShape() {
 		// TODO Auto-generated constructor stub
