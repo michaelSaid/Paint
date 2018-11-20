@@ -264,5 +264,5 @@ public class Controller implements Initializable {
 		if(file!=null) {
         	paintEngine.save(file.getPath());
         }
-	}
+	} 
 }
