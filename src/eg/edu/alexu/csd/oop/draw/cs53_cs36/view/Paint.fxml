@@ -35,7 +35,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Help">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                        <MenuItem mnemonicParsing="false" onAction="#help" text="About MyHelloApp" />
                      </items>
                   </Menu>
                </menus>
@@ -50,7 +50,7 @@
                                  <graphic>
                                     <ImageView fitHeight="44.0" fitWidth="40.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/undo-50.png" />
+                                          <Image url="@icons/undo-50.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -59,7 +59,7 @@
                                  <graphic>
                                     <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/icons8-redo-50.png" />
+                                          <Image url="@icons/icons8-redo-50.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -73,7 +73,7 @@
                                  <graphic>
                                     <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/copy-32.png" />
+                                          <Image url="@icons/copy-32.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -82,7 +82,7 @@
                                  <graphic>
                                     <ImageView fitHeight="44.0" fitWidth="43.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/paste-32.png" />
+                                          <Image url="@icons/paste-32.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -94,7 +94,7 @@
                            <graphic>
                               <ImageView fitHeight="86.0" fitWidth="64.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/181386-200.png" />
+                                    <Image url="@icons/181386-200.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -107,7 +107,7 @@
                                  <graphic>
                                     <ImageView fitHeight="33.0" fitWidth="44.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/icons8-move-50.png" />
+                                          <Image url="@icons/icons8-move-50.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -119,7 +119,7 @@
                                  <graphic>
                                     <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/resize-50.png" />
+                                          <Image url="@icons/resize-50.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -136,7 +136,7 @@
                                  <graphic>
                                     <ImageView fitHeight="57.0" fitWidth="75.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@../../../../../../../../../icons/waste-50.png" />
+                                          <Image url="@icons/waste-50.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -156,7 +156,7 @@
                            <graphic>
                               <ImageView fitHeight="88.0" fitWidth="56.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/icons8-screenshot-64.png" />
+                                    <Image url="@icons/icons8-screenshot-64.png" />
                                  </image>
                               </ImageView>
                            </graphic></Button>
@@ -174,7 +174,7 @@
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="72.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/line-50.png" />
+                                    <Image url="@icons/line-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -185,7 +185,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="72.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/icons8-round-50.png" />
+                                    <Image url="@icons/icons8-round-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -196,7 +196,7 @@
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="71.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/oval-50.png" />
+                                    <Image url="@icons/oval-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -207,7 +207,7 @@
                            <graphic>
                               <ImageView fitHeight="51.0" fitWidth="72.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/rectangular-50.png" />
+                                    <Image url="@icons/rectangular-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -218,7 +218,7 @@
                            <graphic>
                               <ImageView fitHeight="46.0" fitWidth="73.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/square-50.png" />
+                                    <Image url="@icons/square-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -229,7 +229,7 @@
                            <graphic>
                               <ImageView fitHeight="49.0" fitWidth="72.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/triangle-filled-50.png" />
+                                    <Image url="@icons/triangle-filled-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -240,7 +240,7 @@
                            <graphic>
                               <ImageView fitHeight="51.0" fitWidth="74.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/rounded-rectangle-stroked-50.png" />
+                                    <Image url="@icons/rounded-rectangle-stroked-50.png" />
                                  </image>
                               </ImageView>
                            </graphic>

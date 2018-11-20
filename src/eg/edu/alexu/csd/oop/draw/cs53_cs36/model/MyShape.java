@@ -113,6 +113,7 @@ public abstract class MyShape implements Shape {
 	             ((Canvas) canvas).getGraphicsContext2D(); 
 		Point[] bonds = getBonds();
 		g.setStroke(Color.BLACK);
+		g.setLineWidth(2);
 		g.strokeRect(bonds[0].x - margin, bonds[0].y - margin, bonds[3].x - bonds[0].x + 2 * margin,
 			bonds[3].y - bonds[0].y + 2 * margin);
 

@@ -1,8 +1,12 @@
 package eg.edu.alexu.csd.oop.draw.cs53_cs36.view;
 
+import java.awt.Desktop;
 import java.awt.Point;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -543,5 +547,10 @@ public class Controller implements Initializable {
 		height =Math.abs(height+=y);
 		r.getProperties().put("Length", height);
 		r.getProperties().put("Width", width);
+	}
+	@FXML
+	private void help() throws Exception{
+        File myFile = new File("User.pdf");
+        Desktop.getDesktop().open(myFile);
 	}
 }

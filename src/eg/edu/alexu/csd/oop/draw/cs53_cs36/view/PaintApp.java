@@ -23,6 +23,7 @@ public class PaintApp extends Application {
 				controller.Quit();
 			});
 			primaryStage.setResizable(false);
+			primaryStage.setTitle("Paint App");
 			primaryStage.show();
 
 	}
