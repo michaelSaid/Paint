@@ -37,6 +37,7 @@ public class Rectangle extends MyShape {
 	             ((Canvas) canvas).getGraphicsContext2D(); 
 		g.setFill((Color)getFillColor());
 		g.setStroke((Color)getColor());		
+		g.setLineWidth(getProperties().get("stroke"));
 		Point p1 = new Point(getProperties().get("x1").intValue(), getProperties().get("y1").intValue());
 		this.width = getProperties().get("width");
 		this.height=getProperties().get("height");

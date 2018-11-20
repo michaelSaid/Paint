@@ -22,6 +22,7 @@ public abstract class MyShape implements Shape {
 		properties.put("fillcolor", Double.valueOf(getRGB(defaultFillColor)));
 		getProperties().put("x1", 0.0);
 		getProperties().put("y1", 0.0);
+		getProperties().put("stroke", 2.0);
 	}
 	@Override
 	public void setPosition(Object position) {
@@ -81,8 +82,6 @@ public abstract class MyShape implements Shape {
 	public abstract void draw(Object canvas);
 	
 	public void moveBy(int x, int y) {
-		getProperties().put("x1", (double) (((Point)getPosition()).x+x));
-		getProperties().put("y1", (double) (((Point)getPosition()).y+y));
 		setPosition(new Point(((Point)getPosition()).x+x,((Point)getPosition()).y+y));
 	}
 	public abstract void reSizeBy(int x, int y);

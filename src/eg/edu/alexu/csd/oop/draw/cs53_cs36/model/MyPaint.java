@@ -66,7 +66,7 @@ public class MyPaint implements DrawingEngine {
 	public void removeShape(Shape shape) {
 		// TODO Auto-generated method stub
 		for(int i=0;i< MyShapes.size();i++) {
-			if(shape.equals(MyShapes.get(i))) {
+			if(shape.getProperties().equals(MyShapes.get(i).getProperties())) {
 				undoStore(MyShapes);
 				MyShapes.remove(i);
 				redoStore(MyShapes);
@@ -78,7 +78,7 @@ public class MyPaint implements DrawingEngine {
 	public void updateShape(Shape oldShape, Shape newShape) {
 		// TODO Auto-generated method stub
 		for(int i=0;i< MyShapes.size();i++) {
-			if(oldShape.equals(MyShapes.get(i))) {
+			if(oldShape.getProperties().equals(MyShapes.get(i).getProperties())) {
 				undoStore(MyShapes);
 				MyShapes.remove(i);
 				MyShapes.add(i, newShape);

@@ -36,6 +36,7 @@ public class Ellipse extends MyShape {
 	             ((Canvas) canvas).getGraphicsContext2D(); 
 		g.setFill((Color)getFillColor());
 		g.setStroke((Color)getColor());
+		g.setLineWidth(getProperties().get("stroke"));
 		this.width = getProperties().get("width");
 		this.height=getProperties().get("height");
 		g.fillOval(((Point)getPosition()).x, ((Point)getPosition()).y, width, height);

@@ -34,7 +34,7 @@ public class Line extends MyShape {
 		g.setStroke((Color)getColor());
 		Point p1 = new Point(getProperties().get("x1").intValue(), getProperties().get("y1").intValue());
 		Point p2 = new Point(getProperties().get("x2").intValue(), getProperties().get("y2").intValue());
-		g.setLineWidth(2);
+		g.setLineWidth(getProperties().get("stroke"));
 		g.strokeLine(p1.x,p1.y,p2.x,p2.y);
 	}
 
@@ -59,11 +59,9 @@ public class Line extends MyShape {
 	}
 	@Override
 	public void moveBy(int x, int y) {
-		getProperties().put("x1", (double) (((Point)getPosition()).x+x));
-		getProperties().put("y1", (double) (((Point)getPosition()).y+y));
+		setPosition(new Point(((Point)getPosition()).x+x,((Point)getPosition()).y+y));
 		getProperties().put("x2", (double) ((getProperties().get("x2")+x)));
 		getProperties().put("y2", (double) ((getProperties().get("y2")+y)));
-		setPosition(new Point(((Point)getPosition()).x+x,((Point)getPosition()).y+y));
 	}
 	@Override
 	public Point[] getBonds() {

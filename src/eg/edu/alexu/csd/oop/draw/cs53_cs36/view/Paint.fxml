@@ -5,8 +5,9 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToolBar?>
@@ -14,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
+<VBox onKeyPressed="#ClickKeys" prefHeight="569.0" prefWidth="760.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
    <children>
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="569.0" prefWidth="760.0">
+      <SplitPane dividerPositions="0.0632688927943761" orientation="VERTICAL" prefHeight="569.0" prefWidth="760.0">
          <items>
             <MenuBar prefHeight="39.0" prefWidth="760.0">
                <menus>
@@ -26,19 +27,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#load" text="Open…" />
                         <MenuItem mnemonicParsing="false" onAction="#save" text="Save As" />
                         <MenuItem mnemonicParsing="false" onAction="#Quit" text="Quit" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Edit">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" />
-                        <MenuItem mnemonicParsing="false" text="Unselect All" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Help">
@@ -57,7 +45,16 @@
                         <Button fx:id="copyButton" mnemonicParsing="false" onAction="#clickButtons" text="Copy" />
                         <Button fx:id="pasteButton" mnemonicParsing="false" onAction="#clickButtons" text="Paste" />
                         <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickButtons" text="Delete" />
-                        <Button mnemonicParsing="false" onAction="#snapShot" text="snapShot" />
+                        <Button mnemonicParsing="false" onAction="#snapShot" text="SnapShot" />
+                        <MenuButton mnemonicParsing="false" text="Stroke">
+                          <items>
+                            <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Slider fx:id="strokeSlider" onMouseDragged="#Stroke" onMousePressed="#Stroke" onMouseReleased="#Stroke" />
+                                 </graphic>
+                              </MenuItem>
+                          </items>
+                        </MenuButton>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FillColor:" />
                         <ColorPicker fx:id="color" onAction="#Colorfill" promptText="colorfill" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FrameColor" />
@@ -83,6 +80,5 @@
             </AnchorPane>
          </items>
       </SplitPane>
-      <ColorPicker />
    </children>
 </VBox>

@@ -30,6 +30,7 @@ public class Triangle extends MyShape {
 	             ((Canvas) canvas).getGraphicsContext2D(); 
 		g.setFill((Color)getFillColor());
 		g.setStroke((Color)getColor());
+		g.setLineWidth(getProperties().get("stroke"));
 		Point p1 = new Point(getProperties().get("x1").intValue(), getProperties().get("y1").intValue());
 		Point p2 = new Point(getProperties().get("x2").intValue(), getProperties().get("y2").intValue());
 		Point p3 = new Point(getProperties().get("x3").intValue(), getProperties().get("y3").intValue());
@@ -65,8 +66,6 @@ public class Triangle extends MyShape {
 	}
 	@Override
 	public void moveBy(int x, int y) {
-		getProperties().put("x1", (double) (((Point)getPosition()).x+x));
-		getProperties().put("y1", (double) (((Point)getPosition()).y+y));
 		getProperties().put("x2", (double) ((getProperties().get("x2")+x)));
 		getProperties().put("y2", (double) ((getProperties().get("y2")+y)));
 		getProperties().put("x3", (double) ((getProperties().get("x3")+x)));

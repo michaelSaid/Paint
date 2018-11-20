@@ -26,10 +26,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -74,6 +74,8 @@ public class Controller implements Initializable {
     private ColorPicker color;
     @FXML
     private ColorPicker colorframe;
+    @FXML 
+    private Slider strokeSlider;
 	private GraphicsContext workingPicture;
 	private Double startX, startY, lastX, lastY;
 	private String typeToDo = "Line";
@@ -82,7 +84,7 @@ public class Controller implements Initializable {
 	private MyShape oldShape = null;
 	private MyShape selectedShape = null;
 	private Stage stage;
-	MyPaint paintEngine;
+	MyPaint paintEngine;	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -103,6 +105,8 @@ public class Controller implements Initializable {
 		moveButton.setToggleGroup(toggleGroupForShapes);
 		reSizeButton.setToggleGroup(toggleGroupForShapes);
 		selectButton.setToggleGroup(toggleGroupForShapes);
+		strokeSlider.setMin(1);
+		strokeSlider.setMax(15);
 
 	}
 	@FXML
@@ -114,7 +118,7 @@ public class Controller implements Initializable {
 			for(int i=paintEngine.getShapes().length-1;i>=0;i--) {
 				 oldShape = (MyShape) paintEngine.getShapes()[i];
 				if(oldShape.isCountainsPoint(startX.intValue(),startY.intValue())) {
-					selectedShape=oldShape;
+					selectedShape=(MyShape) oldShape.clone();
 					oldShape.drawBonds(finalCanvas);
 					shapeBeingDragged = (MyShape) oldShape.clone();
 					System.out.println("Move is detected");
@@ -195,7 +199,6 @@ public class Controller implements Initializable {
 	}
 	@FXML
 	private void clickButtons(ActionEvent e) throws Exception {
-		
 		Button b = (Button) e.getSource();
 		switch(b.getText()) {
 		case"Undo":paintEngine.undo();break;
@@ -206,6 +209,7 @@ public class Controller implements Initializable {
 		default:
 			break;
 		}
+		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 		paintEngine.refresh(finalCanvas);		
 		return;
 	}
@@ -228,12 +232,13 @@ public class Controller implements Initializable {
 		if(e.getCode()==KeyCode.DELETE)
 			Delete();
 	}
+		workingPicture.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
 		paintEngine.refresh(finalCanvas);		
 		return;
 	}
 	private void Delete(){
 		if(selectedShape!=null) {
-		paintEngine.removeShape(selectedShape);
+		paintEngine.removeShape((Shape)selectedShape);
 		}
 		selectButton.setSelected(false);
 		typeToDo = "";	
@@ -360,26 +365,15 @@ public class Controller implements Initializable {
         	ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
         }
     }
-	
-	@FXML
-	private void Color(ActionEvent event){
-		Color selectedColor = color.getValue();
-		System.out.println(selectedColor);
-		if(selectedShape!=null) {
-			selectedShape.setFillColor((Object)selectedColor);
-			}
-		System.out.println(selectedShape.getFillColor());
-			selectButton.setSelected(false);
-			typeToDo = "";	
-	}
 	@FXML
 	private void Colorfill(ActionEvent event){
 		Color selectedColor = color.getValue();
 		System.out.println(selectedColor);
 		if(selectedShape!=null) {
 			selectedShape.setFillColor((Object)selectedColor);
+			paintEngine.updateShape(oldShape, selectedShape);
+			System.out.println(selectedShape.getFillColor());
 			}
-		System.out.println(selectedShape.getFillColor());
 		paintEngine.refresh(finalCanvas);
 			selectButton.setSelected(false);
 			typeToDo = "";	
@@ -390,12 +384,23 @@ public class Controller implements Initializable {
 		System.out.println(selectedColor);
 		if(selectedShape!=null) {
 			selectedShape.setColor((Object)selectedColor);
+			paintEngine.updateShape(oldShape, selectedShape);
+			System.out.println(selectedShape.getColor());
 			}
-		System.out.println(selectedShape.getColor());
 		paintEngine.refresh(finalCanvas);
 		
 			selectButton.setSelected(false);
 			typeToDo = "";	
+	}
+	@FXML void Stroke() {
+		double strokeValue = strokeSlider.getValue();
+		if(selectedShape!=null) {
+			selectedShape.getProperties().put("stroke" ,strokeValue);
+			paintEngine.updateShape(oldShape, selectedShape);
+		}
+		paintEngine.refresh(finalCanvas);
+		selectButton.setSelected(false);
+		typeToDo = "";	
 	}
 	
 	
