@@ -253,14 +253,16 @@ public class Controller implements Initializable {
 	@FXML
 	private void save() {
 		FileChooser fileChooser = new FileChooser();
-		File file = fileChooser.showSaveDialog(stage);
+		
 		fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home"))
             );
+		
 		fileChooser.getExtensionFilters().addAll(
-	                new FileChooser.ExtensionFilter("XML", "*.xml"),
-	                new FileChooser.ExtensionFilter("JSON", "*.json")
+	                new FileChooser.ExtensionFilter("Xml", "*.xml"),
+	                new FileChooser.ExtensionFilter("Json", "*.json")
 	            );
+		File file = fileChooser.showSaveDialog(stage);
 		if(file!=null) {
         	paintEngine.save(file.getPath());
         }
