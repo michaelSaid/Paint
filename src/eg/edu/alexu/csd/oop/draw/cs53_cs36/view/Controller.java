@@ -453,14 +453,14 @@ public class Controller implements Initializable {
 	Optional<ButtonType> result = alert.showAndWait();
 	if (result.get() == saveButton){
 	    save();
-	} else if (result.get() == dSaveButton) {
-	    try {
-			paintEngine = new MyPaint();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			}
 		}
+	try {
+		paintEngine = new MyPaint();
+		paintEngine.refresh(finalCanvas);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 	@FXML
 	private void snapShot() throws Exception {
