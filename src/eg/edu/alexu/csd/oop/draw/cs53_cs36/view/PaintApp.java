@@ -19,6 +19,9 @@ public class PaintApp extends Application {
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setOnCloseRequest(event ->{
+				controller.Quit();
+			});
 			primaryStage.show();
 
 	}

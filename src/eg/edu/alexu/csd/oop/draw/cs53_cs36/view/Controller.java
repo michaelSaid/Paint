@@ -419,7 +419,7 @@ public class Controller implements Initializable {
         }
 	}
 	@FXML
-	private void Quit(){
+	public void Quit(){
 	Alert alert = new Alert(AlertType.CONFIRMATION);
 	alert.setTitle("Paint");
 	alert.setHeaderText("Do you want to save the changes");
