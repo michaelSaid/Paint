@@ -22,6 +22,7 @@ public class PaintApp extends Application {
 			primaryStage.setOnCloseRequest(event ->{
 				controller.Quit();
 			});
+			primaryStage.setResizable(false);
 			primaryStage.show();
 
 	}

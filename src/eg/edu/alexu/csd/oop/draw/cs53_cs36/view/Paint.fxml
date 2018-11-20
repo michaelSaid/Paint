@@ -7,19 +7,23 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox onKeyPressed="#ClickKeys" prefHeight="571.0" prefWidth="823.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
+<VBox onKeyPressed="#ClickKeys" prefHeight="579.0" prefWidth="827.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eg.edu.alexu.csd.oop.draw.cs53_cs36.view.Controller">
    <children>
-      <SplitPane dividerPositions="0.0632688927943761" orientation="VERTICAL" prefHeight="569.0" prefWidth="760.0">
+      <SplitPane dividerPositions="0.0632688927943761" orientation="VERTICAL" prefHeight="579.0" prefWidth="830.0">
          <items>
-            <MenuBar prefHeight="39.0" prefWidth="760.0">
+            <MenuBar prefHeight="6.0" prefWidth="857.0">
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
@@ -36,47 +40,217 @@
                   </Menu>
                </menus>
             </MenuBar>
-            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="518.0" prefWidth="760.0" style="-fx-background-color: white;">
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="594.0" prefWidth="857.0" style="-fx-background-color: white;">
                <children>
-                  <ToolBar layoutY="1.0" prefHeight="54.0" prefWidth="854.0">
+                  <ToolBar prefHeight="108.0" prefWidth="857.0">
                      <items>
-                        <Button fx:id="undoButton" mnemonicParsing="false" onAction="#clickButtons" text="Undo" />
-                        <Button fx:id="redoButton" mnemonicParsing="false" onAction="#clickButtons" text="Redo" />
-                        <Button fx:id="copyButton" mnemonicParsing="false" onAction="#clickButtons" text="Copy" />
-                        <Button fx:id="pasteButton" mnemonicParsing="false" onAction="#clickButtons" text="Paste" />
-                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickButtons" text="Delete" />
-                        <Button mnemonicParsing="false" onAction="#snapShot" text="SnapShot" />
-                        <MenuButton mnemonicParsing="false" text="Stroke">
-                          <items>
-                            <MenuItem mnemonicParsing="false">
+                        <VBox prefHeight="81.0" prefWidth="55.0">
+                           <children>
+                              <Button fx:id="undoButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtons" prefHeight="54.0" prefWidth="37.0" text="Undo">
                                  <graphic>
-                                    <Slider fx:id="strokeSlider" onMouseDragged="#Stroke" onMousePressed="#Stroke" onMouseReleased="#Stroke" />
+                                    <ImageView fitHeight="44.0" fitWidth="40.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/undo-50.png" />
+                                       </image>
+                                    </ImageView>
                                  </graphic>
-                              </MenuItem>
-                          </items>
-                        </MenuButton>
+                              </Button>
+                              <Button fx:id="redoButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtons" prefHeight="51.0" prefWidth="58.0" text="Redo">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="37.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/icons8-redo-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="68.0" prefWidth="6.0" />
+                        <VBox prefHeight="74.0" prefWidth="67.0">
+                           <children>
+                              <Button fx:id="copyButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtons" prefHeight="45.0" prefWidth="55.0" text="Copy">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="43.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/copy-32.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="pasteButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtons" prefHeight="47.0" prefWidth="59.0" text="Paste">
+                                 <graphic>
+                                    <ImageView fitHeight="44.0" fitWidth="43.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/paste-32.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
+                        <ToggleButton fx:id="selectButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="94.0" prefWidth="69.0" text="Select">
+                           <graphic>
+                              <ImageView fitHeight="86.0" fitWidth="64.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/181386-200.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Select" />
+                           </tooltip></ToggleButton>
+                        <VBox prefHeight="65.0" prefWidth="70.0">
+                           <children>
+                              <ToggleButton fx:id="moveButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="55.0" prefWidth="66.0" text="Move">
+                                 <graphic>
+                                    <ImageView fitHeight="33.0" fitWidth="44.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/icons8-move-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Move" />
+                                 </tooltip>
+                              </ToggleButton>
+                              <ToggleButton fx:id="reSizeButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="52.0" prefWidth="64.0" text="Resize">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/resize-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Resize" />
+                                 </tooltip>
+                              </ToggleButton>
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
+                        <VBox prefHeight="0.0" prefWidth="97.0">
+                           <children>
+                              <Button fx:id="deleteButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtons" text="Delete">
+                                 <graphic>
+                                    <ImageView fitHeight="57.0" fitWidth="75.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../../../../../../../../icons/waste-50.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Stroke">
+                                <items>
+                                  <MenuItem mnemonicParsing="false">
+                                       <graphic>
+                                          <Slider fx:id="strokeSlider" onMouseDragged="#Stroke" onMousePressed="#Stroke" onMouseReleased="#Stroke" />
+                                       </graphic>
+                                    </MenuItem>
+                                </items>
+                              </MenuButton>
+                           </children>
+                        </VBox>
+                        <Button ellipsisString="" mnemonicParsing="false" onAction="#snapShot" prefHeight="7.0" prefWidth="81.0" text="SnapShot">
+                           <graphic>
+                              <ImageView fitHeight="88.0" fitWidth="56.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/icons8-screenshot-32.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="1.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FillColor:" />
                         <ColorPicker fx:id="color" onAction="#Colorfill" prefHeight="31.0" prefWidth="97.0" promptText="colorfill" />
+                        <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FrameColor" />
                         <ColorPicker fx:id="colorframe" onAction="#Colorframe" prefHeight="31.0" prefWidth="100.0" promptText="colorframe" />
                      </items>
                   </ToolBar>
-                  <ToolBar layoutY="53.0" orientation="VERTICAL" prefHeight="476.0" prefWidth="135.0">
+                  <ToolBar layoutY="106.0" orientation="VERTICAL" prefHeight="439.0" prefWidth="107.0">
                      <items>
-                        <ToggleButton fx:id="lineButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Line" />
-                        <ToggleButton fx:id="circleButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Circle" />
-                        <ToggleButton fx:id="ellipseButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="91.0" text="Ellipse" />
-                        <ToggleButton fx:id="rectangleButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Rectangle" />
-                        <ToggleButton fx:id="squareButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Square" />
-                        <ToggleButton fx:id="triangleButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Triangle" />
-                        <ToggleButton fx:id="roundButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="RoundRectangle" />
-                        <ToggleButton fx:id="moveButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Move" />
-                        <ToggleButton fx:id="reSizeButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Resize" />
-                        <ToggleButton fx:id="selectButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Select" />
+                        <ToggleButton fx:id="lineButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="46.0" prefWidth="93.0" text="Line">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="72.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/line-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip contentDisplay="TOP" text="Line" textAlignment="CENTER" />
+                           </tooltip></ToggleButton>
+                        <ToggleButton fx:id="circleButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="50.0" prefWidth="67.0" text="Circle">
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="72.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/icons8-round-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Circle" />
+                           </tooltip></ToggleButton>
+                        <ToggleButton fx:id="ellipseButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="91.0" text="Ellipse">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="71.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/oval-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Ellipse" />
+                           </tooltip></ToggleButton>
+                        <ToggleButton fx:id="rectangleButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="91.0" text="Rectangle">
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="72.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/rectangular-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Rectangle" />
+                           </tooltip></ToggleButton>
+                        <ToggleButton fx:id="squareButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="92.0" text="Square">
+                           <graphic>
+                              <ImageView fitHeight="46.0" fitWidth="73.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/square-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Square" />
+                           </tooltip></ToggleButton>
+                        <ToggleButton fx:id="triangleButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Triangle">
+                           <graphic>
+                              <ImageView fitHeight="49.0" fitWidth="72.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/triangle-filled-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Triangle" />
+                           </tooltip></ToggleButton>
+                        <ToggleButton fx:id="roundButton" ellipsisString="" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="56.0" prefWidth="91.0" text="RoundRectangle">
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="74.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../../icons/rounded-rectangle-stroked-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Round Rectangle" />
+                           </tooltip></ToggleButton>
                      </items>
                   </ToolBar>
-                  <Canvas fx:id="finalCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="720.0" />
-                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="720.0" />
+                  <Canvas fx:id="finalCanvas" height="429.0" layoutX="109.0" layoutY="108.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="746.0" />
+                  <Canvas fx:id="workingCanvas" height="429.0" layoutX="109.0" layoutY="108.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="746.0" />
                </children>
             </AnchorPane>
          </items>
