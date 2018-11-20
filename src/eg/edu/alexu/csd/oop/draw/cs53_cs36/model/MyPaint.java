@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.draw.cs53_cs36.model;
 
 import java.awt.Graphics;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class MyPaint implements DrawingEngine {
 			e.printStackTrace();
 		}
 		installPluginShape("RoundRectangle.jar");
+		for(int i=0;i<supportedShapes.size();i++)
+			System.out.println(supportedShapes.get(i).getName());
 	}
 	@Override
 	public void refresh(Object canvas) {
@@ -66,26 +69,46 @@ public class MyPaint implements DrawingEngine {
 	public void removeShape(Shape shape) {
 		// TODO Auto-generated method stub
 		for(int i=0;i< MyShapes.size();i++) {
+			
+		if(shape.getProperties()!=null&&MyShapes.get(i).getProperties()!=null) {
 			if(shape.getProperties().equals(MyShapes.get(i).getProperties())) {
 				undoStore(MyShapes);
 				MyShapes.remove(i);
 				redoStore(MyShapes);
+				return;
 			}
+		}else if(shape.getProperties()==null&&MyShapes.get(i).getProperties()==null)
+		{
+			undoStore(MyShapes);
+			MyShapes.remove(i);
+			redoStore(MyShapes);
+			return;
 		}
 	}
+}
 
 	@Override
 	public void updateShape(Shape oldShape, Shape newShape) {
 		// TODO Auto-generated method stub
 		for(int i=0;i< MyShapes.size();i++) {
+		if(oldShape.getProperties()!=null&&MyShapes.get(i).getProperties()!=null) {
 			if(oldShape.getProperties().equals(MyShapes.get(i).getProperties())) {
 				undoStore(MyShapes);
 				MyShapes.remove(i);
 				MyShapes.add(i, newShape);
 				redoStore(MyShapes);
+				return;
 			}
+		}else if(oldShape.getProperties()==null&&MyShapes.get(i).getProperties()==null)
+		{
+			undoStore(MyShapes);
+			MyShapes.remove(i);
+			MyShapes.add(i, newShape);
+			redoStore(MyShapes);
+			return;
 		}
 	}
+}
 
 	@Override
 	public Shape[] getShapes() {
@@ -213,7 +236,6 @@ public class MyPaint implements DrawingEngine {
 				    try {
 						Class<?> c = classLoader.loadClass(className);
 						supportedShapes.add((Class<? extends Shape>) c);
-						System.out.println(c.getName());
 					} catch (ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -224,10 +246,22 @@ public class MyPaint implements DrawingEngine {
 			e.printStackTrace();
 		}
 	}
-	public int undoSize() {
-		return this.undo.size();
-	}
-	public int redoSize() {
-		return this.redo.size();
+	public Shape createShape(String nameClass) throws Exception {
+		if(nameClass.endsWith("eg.edu.alexu.csd.oop.test.DummyShape")) {
+			
+			Class<? extends Shape> x = (Class<? extends Shape>) Class.forName(nameClass);
+			Constructor<?> ctor = x.getConstructor();
+			Shape shape = (Shape) ctor.newInstance(new Object[] {});
+			return shape;
+		}
+		for(Class<? extends Shape> x:this.supportedShapes) {
+			if(x.getName().equals(nameClass)) {
+				Constructor<?> ctor = x.getConstructor();
+				Shape shape = (Shape) ctor.newInstance(new Object[] {});
+				return shape;
+			}
+		}
+		return null;
+		
 	}
 }

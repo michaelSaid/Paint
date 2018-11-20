@@ -73,9 +73,7 @@ public class FileManager {
 					Node node = nList.item(i);
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Element element = (Element) node;
-							Class<?> classShape = Class.forName(element.getAttribute("id"));
-							Constructor<?> ctor = classShape.getConstructor();
-							Shape shape = (Shape) ctor.newInstance(new Object[] { });
+							Shape shape = p.createShape(element.getAttribute("id"));
 			        		Map <String, Double>properties = new HashMap<String, Double>();
 			        		NodeList map = element.getElementsByTagName("map").item(0).getChildNodes();
 			        		for(int j=0;j<map.getLength();j++) {
@@ -160,9 +158,7 @@ public class FileManager {
 		if(!builder.toString().equals("nullnull")){
 			while(!((currentLine = br.readLine()).equals("]"))){
 				currentLine = br.readLine();
-				Class<?> classShape = Class.forName(getValue(currentLine));
-				Constructor<?> ctor = classShape.getConstructor();
-				Shape shape = (Shape) ctor.newInstance(new Object[] { });
+				Shape shape = p.createShape(getValue(currentLine));
 				if(shape != null){
 					String property = br.readLine();
 					Map<String,Double> properties = new HashMap<String,Double>();
