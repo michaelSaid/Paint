@@ -156,7 +156,7 @@
                            <graphic>
                               <ImageView fitHeight="88.0" fitWidth="56.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../../../../../../../../../icons/icons8-screenshot-32.png" />
+                                    <Image url="@../../../../../../../../../icons/icons8-screenshot-64.png" />
                                  </image>
                               </ImageView>
                            </graphic></Button>

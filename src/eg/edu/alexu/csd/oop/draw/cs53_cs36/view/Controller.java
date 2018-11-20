@@ -480,11 +480,11 @@ public class Controller implements Initializable {
 	private void Colorfill(ActionEvent event){
 		Color selectedColor = color.getValue();
 		System.out.println(selectedColor);
-		if(selectedShape!=null) {
+		if(selectedShape!=null&&oldShape!=null) {
 			selectedShape.setFillColor((Object)selectedColor);
 			paintEngine.updateShape(oldShape, selectedShape);
 			System.out.println(selectedShape.getFillColor());
-			}else if(round!=null) {
+			}else if(round!=null&&oldRound!=null) {
 				java.awt.Color awtColor = new java.awt.Color(MyShape.getRGB(selectedColor));
 				round.setFillColor(awtColor);
 				paintEngine.updateShape(oldRound, round);
@@ -498,11 +498,11 @@ public class Controller implements Initializable {
 	private void Colorframe(ActionEvent event){
 		Color selectedColor = colorframe.getValue();
 		System.out.println(selectedColor);
-		if(selectedShape!=null) {
+		if(selectedShape!=null&&oldShape!=null) {
 			selectedShape.setColor((Object)selectedColor);
 			paintEngine.updateShape(oldShape, selectedShape);
 			System.out.println(selectedShape.getColor());
-			}else if(round!=null) {
+			}else if(round!=null&&oldRound!=null) {
 				java.awt.Color awtColor = new java.awt.Color(MyShape.getRGB(selectedColor));
 				round.setColor(awtColor);
 				paintEngine.updateShape(oldRound, round);
@@ -515,10 +515,10 @@ public class Controller implements Initializable {
 	}
 	@FXML void Stroke() {
 		double strokeValue = strokeSlider.getValue();
-		if(selectedShape!=null) {
+		if(selectedShape!=null&&oldShape!=null) {
 			selectedShape.getProperties().put("stroke" ,strokeValue);
 			paintEngine.updateShape(oldShape, selectedShape);
-		}else if(round!=null) {
+		}else if(round!=null&&oldRound!=null) {
 			round.getProperties().put("stroke" ,strokeValue);
 			paintEngine.updateShape(oldRound, round);
 		}
