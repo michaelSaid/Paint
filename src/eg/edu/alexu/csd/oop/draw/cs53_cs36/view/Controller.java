@@ -4,17 +4,23 @@ import java.awt.Point;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import eg.edu.alexu.csd.oop.draw.Shape;
 import eg.edu.alexu.csd.oop.draw.cs53_cs36.model.MyPaint;
 import eg.edu.alexu.csd.oop.draw.cs53_cs36.model.MyShape;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
@@ -56,8 +62,6 @@ public class Controller implements Initializable {
     private Button pasteButton;
     @FXML
     private Button deleteButton;
-    @FXML
-    private Button saveButton;
 	private GraphicsContext workingPicture;
 	private Double startX, startY, lastX, lastY;
 	private String typeToDo = "Line";
@@ -201,6 +205,8 @@ public class Controller implements Initializable {
 		case C:copy();break;
 		case V:paste();break;
 		case S:save();break;
+		case O:load();break;
+		case N:New();break;
 		case Z:paintEngine.undo();break;
 		case Y:paintEngine.redo();break;
 		default:
@@ -266,5 +272,62 @@ public class Controller implements Initializable {
 		if(file!=null) {
         	paintEngine.save(file.getPath());
         }
-	} 
+	}
+	@FXML
+	private void load() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open");
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+            );
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XML", "*.xml"),
+                new FileChooser.ExtensionFilter("JSON", "*.json")
+            );
+        File file = fileChooser.showOpenDialog(null);
+        if(file!=null) {
+        	paintEngine.load(file.getPath());
+        	paintEngine.refresh(finalCanvas);
+        }
+	}
+	@FXML
+	private void Quit(){
+	Alert alert = new Alert(AlertType.CONFIRMATION);
+	alert.setTitle("Paint");
+	alert.setHeaderText("Do you want to save the changes");
+	alert.setContentText("Choose your option.");
+	ButtonType saveButton = new ButtonType("Save");
+	ButtonType dSaveButton = new ButtonType("Don't Save");
+	ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+	alert.getButtonTypes().setAll(saveButton, dSaveButton,buttonTypeCancel);
+	Optional<ButtonType> result = alert.showAndWait();
+	if (result.get() == saveButton){
+	    save();
+	}else if (result.get() == dSaveButton) {
+	    Platform.exit();
+		}
+	}
+	@FXML
+	private void New(){
+
+	Alert alert = new Alert(AlertType.CONFIRMATION);
+	alert.setTitle("Paint");
+	alert.setHeaderText("Do you want to save the changes");
+	alert.setContentText("Choose your option.");
+	ButtonType saveButton = new ButtonType("Save");
+	ButtonType dSaveButton = new ButtonType("Don't Save");
+	ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+	alert.getButtonTypes().setAll(saveButton, dSaveButton,buttonTypeCancel);
+	Optional<ButtonType> result = alert.showAndWait();
+	if (result.get() == saveButton){
+	    save();
+	} else if (result.get() == dSaveButton) {
+	    try {
+			paintEngine = new MyPaint();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
+		}
+	}
 }
