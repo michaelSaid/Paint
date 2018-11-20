@@ -70,8 +70,8 @@
                         <ToggleButton fx:id="selectButton" mnemonicParsing="false" onAction="#clickButtonShapes" prefHeight="31.0" prefWidth="93.0" text="Select" />
                      </items>
                   </ToolBar>
-                  <Canvas fx:id="finalCanvas" height="469.0" layoutX="135.0" layoutY="60.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
-                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="53.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
+                  <Canvas fx:id="finalCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
+                  <Canvas fx:id="workingCanvas" height="469.0" layoutX="135.0" layoutY="57.0" onMouseDragged="#onMouseDraggedListener" onMousePressed="#onMousePressedListener" onMouseReleased="#onMouseReleaseListener" width="625.0" />
                </children>
             </AnchorPane>
          </items>

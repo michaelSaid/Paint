@@ -35,7 +35,7 @@ public abstract class MyShape implements Shape {
 	public Object getPosition() {
 		// TODO Auto-generated method stub
 		Point p = new Point();
-		p.setLocation(this.getProperties().get("x1"), this.getProperties().get("x1"));
+		p.setLocation(this.getProperties().get("x1"), this.getProperties().get("y1"));
 		this.position=p;
 		return position;
 	}
