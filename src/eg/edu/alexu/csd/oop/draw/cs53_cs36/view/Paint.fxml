@@ -36,7 +36,7 @@
                   </Menu>
                </menus>
             </MenuBar>
-            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="518.0" prefWidth="760.0">
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="518.0" prefWidth="760.0" style="-fx-background-color: white;">
                <children>
                   <ToolBar layoutY="1.0" prefHeight="54.0" prefWidth="854.0">
                      <items>
