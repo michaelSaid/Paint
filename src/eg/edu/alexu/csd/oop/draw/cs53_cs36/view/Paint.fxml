@@ -55,6 +55,7 @@
                         <Button fx:id="copyButton" mnemonicParsing="false" onAction="#clickButtons" text="Copy" />
                         <Button fx:id="pasteButton" mnemonicParsing="false" onAction="#clickButtons" text="Paste" />
                         <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#clickButtons" text="Delete" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="162.0" text="Save" />
                      </items>
                   </ToolBar>
                   <ToolBar layoutY="53.0" orientation="VERTICAL" prefHeight="476.0" prefWidth="135.0">

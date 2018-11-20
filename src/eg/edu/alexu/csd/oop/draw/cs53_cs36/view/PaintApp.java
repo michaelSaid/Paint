@@ -11,7 +11,11 @@ public class PaintApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-			Parent root = FXMLLoader.load(getClass().getResource("Paint.fxml"));
+		 FXMLLoader loader = new FXMLLoader(getClass().getResource("Paint.fxml"));
+			Parent root = loader.load();
+			Controller controller = (Controller)loader.getController();
+			controller.init(primaryStage);
+			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

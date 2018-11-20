@@ -1,6 +1,7 @@
 package eg.edu.alexu.csd.oop.draw.cs53_cs36.view;
 
 import java.awt.Point;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +20,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 public class Controller implements Initializable {
 
 	@FXML
@@ -53,6 +56,8 @@ public class Controller implements Initializable {
     private Button pasteButton;
     @FXML
     private Button deleteButton;
+    @FXML
+    private Button saveButton;
 	private GraphicsContext workingPicture;
 	private Double startX, startY, lastX, lastY;
 	private String typeToDo = "Line";
@@ -60,6 +65,7 @@ public class Controller implements Initializable {
 	private MyShape shapeBeingDragged = null;
 	private MyShape oldShape = null;
 	private MyShape selectedShape = null;
+	private Stage stage;
 	MyPaint paintEngine;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -194,6 +200,7 @@ public class Controller implements Initializable {
 		switch(e.getCode()) {
 		case C:copy();break;
 		case V:paste();break;
+		case S:save();break;
 		case Z:paintEngine.undo();break;
 		case Y:paintEngine.redo();break;
 		default:
@@ -239,5 +246,23 @@ public class Controller implements Initializable {
 		typeToDo = "";
 	}
 	
-
+	public void init(Stage stage) {
+		// TODO Auto-generated method stub
+		this.stage=stage;
+	}
+	@FXML
+	private void save() {
+		FileChooser fileChooser = new FileChooser();
+		File file = fileChooser.showSaveDialog(stage);
+		fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+            );
+		fileChooser.getExtensionFilters().addAll(
+	                new FileChooser.ExtensionFilter("XML", "*.xml"),
+	                new FileChooser.ExtensionFilter("JSON", "*.json")
+	            );
+		if(file!=null) {
+        	paintEngine.save(file.getPath());
+        }
+	}
 }
