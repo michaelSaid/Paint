@@ -7,13 +7,17 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+
 import eg.edu.alexu.csd.oop.draw.Shape;
 import eg.edu.alexu.csd.oop.draw.cs53_cs36.model.MyPaint;
 import eg.edu.alexu.csd.oop.draw.cs53_cs36.model.MyShape;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -23,9 +27,12 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 public class Controller implements Initializable {
@@ -330,4 +337,22 @@ public class Controller implements Initializable {
 			}
 		}
 	}
+	@FXML
+	private void snapShot() throws Exception {
+		SnapshotParameters params = new SnapshotParameters();
+		params.setFill(Color.TRANSPARENT);
+		Image snapshot = finalCanvas.snapshot(params, null);
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save As");
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home"))
+            );
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+            );
+        File file = fileChooser.showSaveDialog(null);
+        if(file!=null) {
+        	ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
+        }
+}
 }
